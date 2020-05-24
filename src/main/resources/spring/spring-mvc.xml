@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--注解扫描-->
+    <context:component-scan base-package="com"></context:component-scan>
+
+    <!--servlet注解驱动-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--静态资源过滤，静态资源交给默认的servlet处理-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--一旦配置了视图解析器，那么默认所有的控制层的方法跳转都会添加指定的前缀和后缀，跳转时只要写相应的名字即可-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+        <!--设置优先级-->
+        <property name="order" value="1"></property>
+    </bean>
+
+    <!--添加文件上传的转换类-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxInMemorySize">
+            <!--设置最大上传大小为10MB-->
+            <value>10485760</value>
+        </property>
+    </bean>
+
+    <!--统一异常处理-->
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--        &lt;!&ndash;指定默认的错误页面，配置了视图解析器，只需写视图名&ndash;&gt;-->
+<!--        <property name="defaultErrorView" value="error"></property>-->
+<!--    </bean>-->
+
+    <!--springMVC的拦截器-->
+    <mvc:interceptors>
+        <!--拦截指定的/**请求并不拦截指定的/account/login请求-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/account/login"/>
+            <bean class="com.util.InterceptUtil"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--启动shiro注解-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+</beans>

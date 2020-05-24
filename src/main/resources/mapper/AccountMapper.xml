@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AccountDao">
+
+    <select id="login" resultType="com.entity.Account">
+        select * from account  where loginName=#{loginName} and password=#{password} and state=1
+    </select>
+
+    <select id="selectAll" resultType="com.entity.Account">
+        select * from account where state=1
+    </select>
+
+    <select id="selectId" resultType="com.entity.Account">
+        select * from account where id=#{id} and state=1
+    </select>
+
+    <select id="selectPage" resultType="com.entity.Account">
+        select * from account where state=1 limit #{start},#{pageSize}
+    </select>
+
+    <select id="selectCondition" resultType="com.entity.Account">
+        select * from account
+        <where>
+            <if test="true">
+                and state=1
+            </if>
+            <if test="account.name!=null and account.name!=''">
+                and name like concat('%',#{account.name},'%')
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <insert id="insertAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.entity.Account">
+        insert into account values (null,#{name},#{loginName},#{password},1,now())
+    </insert>
+
+    <update id="update">
+        update account set name=#{name},loginName=#{loginName},password=#{password},state=1,time=now() where id=#{id}
+    </update>
+
+    <delete id="delete">
+        update account set state=#{state} where id=#{id}
+    </delete>
+
+    <select id="queryName" resultType="com.entity.Account">
+        select * from account where loginName=#{name} and state=1
+    </select>
+
+    <select id="queryMenuName" resultType="String">
+        select location from menu where id in(select menuId from jurisdiction where accountId in(select id from account where loginName=#{name} and state=1))
+    </select>
+
+</mapper>

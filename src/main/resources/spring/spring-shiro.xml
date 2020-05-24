@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置shiro过滤器，id要与web.xml中配置的filtername一致-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="loginUrl" value="/login.jsp"></property>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"></property>
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /login.jsp=anon
+                /account/login=anon
+                /index.jsp=user
+                /logout=logout
+            </value>
+        </property>
+    </bean>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--配置自定义的realm-->
+        <property name="realm">
+            <bean class="com.util.MyReaml"></bean>
+        </property>
+    </bean>
+
+</beans>

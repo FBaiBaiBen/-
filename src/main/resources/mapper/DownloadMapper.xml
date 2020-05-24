@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.DownloadDao">
+
+    <resultMap id="selectAllDownload" type="com.entity.Download" autoMapping="true">
+        <!--当映射集合或对象时，自动映射会默认关闭，autoMapping="true"开启自动映射-->
+        <association property="account" javaType="com.entity.Account">
+            <id property="id" column="bid"></id>
+            <result property="name" column="bname"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="selectAllDownload">
+        select a.*,b.id bid,b.name bname from download a inner join account b on a.id=b.id where a.state=1
+    </select>
+
+    <select id="selectId" resultType="com.entity.Download">
+        select * from download where id=#{id}
+    </select>
+
+    <select id="selectPage" resultMap="selectAllDownload">
+        select a.*,b.id bid,b.name bname from download a inner join account b on a.id=b.id where a.state=1 limit #{start},#{pageSize}
+    </select>
+
+    <select id="selectCondition" resultMap="selectAllDownload">
+        select a.*,b.id bid,b.name bname from download a inner join account b on a.id=b.id
+        <where>
+            <if test="true">
+                and a.state=1
+            </if>
+            <if test="download.name!=null and download.name!=''">
+                and a.name like concat('%',#{download.name},'%')
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <insert id="insert">
+        insert into download values (null,#{accountId},#{name},#{description},#{location},1,now())
+    </insert>
+
+    <update id="update">
+        update download set accountId=#{accountId},name=#{name},description=#{description},location=#{location},state=1,time=now() where id=#{id}
+    </update>
+
+    <delete id="delete">
+        update download set state=#{state} where id=#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.StaffDao">
+
+    <!--结果集映射，用于将查询的结果映射到指定的类对象中-->
+    <resultMap id="selectAllStaff" type="com.entity.Staff" autoMapping="true">
+        <!--当映射集合或对象时，自动映射会默认关闭，autoMapping="true"开启自动映射-->
+        <association property="post" javaType="com.entity.Post">
+            <id property="id" column="bid"></id>
+            <result property="name" column="bname"></result>
+            <result property="details" column="bdetails"></result>
+        </association>
+        <association property="section" javaType="com.entity.Section">
+            <id property="id" column="cid"></id>
+            <result property="name" column="cname"></result>
+            <result property="details" column="cdetails"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="selectAllStaff">
+        select a.*,b.id bid,b.name bname,b.details bdetails,c.id cid,c.name cname,c.details cdetails from staff a inner join post b on a.id=b.id inner join section c on a.id=c.id where a.state=1
+    </select>
+
+    <select id="selectId" resultType="com.entity.Staff">
+        select * from staff where id=#{id}
+    </select>
+
+    <select id="selectPage" resultMap="selectAllStaff">
+        select a.*,b.id bid,b.name bname,b.details bdetails,c.id cid,c.name cname,c.details cdeteils from staff a inner join post b on a.id=b.id inner join section c on a.id=c.id where a.state=1 limit #{start},#{pageSize}
+    </select>
+
+    <select id="selectCondition" resultMap="selectAllStaff">
+        select a.*,b.id bid,b.name bname,b.details bdetails,c.id cid,c.name cname,c.details cdetails from staff a inner join post b on a.id=b.id inner join section c on a.id=c.id
+        <where>
+            <if test="true">
+                and a.state=1
+            </if>
+            <if test="staff.postId!=null">
+                and postId=#{staff.postId}
+            </if>
+            <if test="staff.sectionId!=null">
+                and sectionId=#{staff.sectionId}
+            </if>
+            <if test="staff.name!=null and staff.name!=''">
+                and a.name like concat('%',#{staff.name},'%')
+            </if>
+            <if test="staff.sex!=null and staff.sex!=''">
+                and a.sex=#{staff.sex}
+            </if>
+            <if test="staff.phone!=null and staff.phone!=''">
+                and a.phone=#{staff.phone}
+            </if>
+            <if test="staff.identity!=null and staff.identity!=''">
+                and a.identity=#{staff.identity}
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <insert id="insert">
+        insert into staff values (null,#{postId},#{sectionId},#{name},#{sex},#{phone},#{mailbox},#{education},#{identity},#{site},1,#{time})
+    </insert>
+
+    <update id="update">
+        update staff set postId=#{postId},sectionId=#{sectionId},name=#{name},sex=#{sex},phone=#{phone},mailbox=#{mailbox},education=#{education},identity=#{identity},site=#{site},state=1,time=now() where id=#{id}
+    </update>
+
+    <delete id="delete">
+        update staff set state=#{state} where id=#{id}
+    </delete>
+
+</mapper>

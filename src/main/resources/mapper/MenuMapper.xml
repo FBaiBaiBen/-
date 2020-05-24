@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MenuDao">
+
+    <select id="selectAll" resultType="com.entity.Menu">
+        select * from menu
+    </select>
+
+    <select id="selectId" resultType="com.entity.Menu">
+        select * from menu where id=#{id}
+    </select>
+
+    <select id="select" resultType="com.entity.Menu">
+        select * from menu where id in(select menuId from jurisdiction where accountId=#{id})
+    </select>
+
+    <insert id="insert">
+        insert into menu values (null,#{parentId},#{name},#{location})
+    </insert>
+
+    <update id="update">
+        update menu set parentId=#{parentId},name=#{name},location=#{location} where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from menu where id=#{id}
+    </delete>
+
+</mapper>
