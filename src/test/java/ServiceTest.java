@@ -11,9 +11,15 @@ import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -43,11 +49,11 @@ public class ServiceTest {
             subject.login(token);
             //获取认证结果
             System.out.println("认证结果: " + subject.isAuthenticated());
-            System.out.println("是否是管理员"+subject.hasRole("admin"));
-            System.out.println("是否是老板"+subject.hasRole("boss"));
+            System.out.println("是否是管理员" + subject.hasRole("admin"));
+            System.out.println("是否是老板" + subject.hasRole("boss"));
 
-            System.out.println("是否拥有对用户的新增权限"+subject.isPermitted("account:add"));
-            System.out.println("是否拥有对用户的新增、修改权限"+ Arrays.toString(subject.isPermitted("account:add","account:update")));
+            System.out.println("是否拥有对用户的新增权限" + subject.isPermitted("account:add"));
+            System.out.println("是否拥有对用户的新增、修改权限" + Arrays.toString(subject.isPermitted("account:add", "account:update")));
         } catch (UnknownAccountException uae) {
             System.out.println("用户名不对! ");
         } catch (IncorrectCredentialsException ice) {
@@ -55,4 +61,25 @@ public class ServiceTest {
         }
 
     }
+
+    @Test
+    public void springmail() throws MessagingException {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("spring-mail.xml");
+        JavaMailSender javaMailSender = ioc.getBean(JavaMailSender.class);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        //发送方  这个要和properties中的一致
+        helper.setFrom("2239335361@qq.com");
+        //接受方
+        helper.setTo("645879124@qq.com");
+        //主题
+        helper.setSubject("java发送邮件");
+        //邮件内容
+        helper.setText("spring自带的邮箱发送工具");
+
+        javaMailSender.send(message);
+    }
+
 }

@@ -18,6 +18,8 @@
             charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.js" type="text/javascript"
             charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap/js/formverify.js" type="text/javascript"
+            charset="utf-8"></script>
     <style type="text/css">
         ul {
             list-style: none;

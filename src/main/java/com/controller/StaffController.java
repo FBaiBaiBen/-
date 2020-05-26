@@ -7,11 +7,15 @@ import com.service.SectionService;
 import com.service.StaffService;
 import com.util.PageUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,6 +45,33 @@ public class StaffController {
 
     @Resource
     private SectionService sectionService;
+
+    @Resource
+    private JavaMailSender javaMailSender;
+
+    @RequestMapping(value = "mail", produces = "text/html;charset=utf-8")
+    public void mail(String mailbox,String name,String content, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        MimeMessage message=javaMailSender.createMimeMessage();
+        MimeMessageHelper helper=new MimeMessageHelper(message);
+        try {
+            //发送方  这个要和properties中的一致
+            helper.setFrom("2239335361@qq.com");
+            //接受方
+            helper.setTo(mailbox);
+            //主题
+            helper.setSubject(name);
+            //邮件内容
+            helper.setText(content);
+            System.out.println("开始发送");
+            javaMailSender.send(message);
+            System.out.println("发送成功");
+            response.getWriter().println("<script>alert('发送成功');location.href='" + request.getContextPath() + "/staff/show'</script>");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            response.getWriter().println("<script>alert('发送失败');location.href='" + request.getContextPath() + "/staff/show'</script>");
+        }
+    }
 
     @RequestMapping("show")
     public String show(@RequestParam(defaultValue = "1") Integer page, Model model) {

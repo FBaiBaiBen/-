@@ -167,7 +167,7 @@
             </nav>
         </div>
         <main class="col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content border" role="main">
-            <iframe name="mainpael" src="" width="100%" frameborder="0" height="100%" scrolling="auto"></iframe>
+            <iframe name="mainpael" src="${pageContext.request.contextPath}/chart.jsp" width="100%" frameborder="0" height="100%" scrolling="auto"></iframe>
         </main>
     </div>
 </div>

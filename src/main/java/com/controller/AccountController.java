@@ -14,11 +14,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpRequest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +42,7 @@ import java.util.Map;
  * @since 2020-05-14 17:41:41
  */
 @Controller
-@RequiresPermissions("account/show")
+//@RequiresPermissions("account/show")
 @RequestMapping("account")
 public class AccountController {
     /**
@@ -73,18 +79,12 @@ public class AccountController {
         }
     }
 
-//    @RequestMapping("login")
-//    public String login(String name, String password, HttpSession session) {
-//        Account account = accountService.login(name, password);
-//        if (account != null) {
-//            Map<String, List<Menu>> map = menuService.select(account.getId());
-//            session.setAttribute("menuList", map.get("menuList"));
-//            session.setAttribute("parentList", map.get("parentList"));
-//            session.setAttribute("admin", account);
-//            return "WEB-INF/jsp/index";
-//        }
-//        return "login";
-//    }
+    @RequestMapping("chart")
+    @ResponseBody
+    public Map<String, Integer> chart(HttpServletRequest request) {
+        Map<String, Integer> map= (Map<String, Integer>) request.getServletContext().getAttribute("map");
+        return map;
+    }
 
     @RequestMapping("show")
     public String show(@RequestParam(defaultValue = "1") Integer page, Model model) {

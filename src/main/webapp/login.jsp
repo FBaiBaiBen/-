@@ -50,7 +50,7 @@
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> 记住密码
+                <input type="checkbox" name="remeberme"> 记住密码
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>

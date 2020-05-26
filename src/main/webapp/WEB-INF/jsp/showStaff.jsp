@@ -18,6 +18,8 @@
             charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.js" type="text/javascript"
             charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap/js/formverify.js" type="text/javascript"
+            charset="utf-8"></script>
     <style type="text/css">
         ul {
             list-style: none;
@@ -41,7 +43,8 @@
                 <input type="hidden" name="page" value="1">
                 <div class="row w-100">
                     <div class="form-group ml-4 mr-2">
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Modal" onclick="add()">添加员工
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Modal"
+                                onclick="add()">添加员工
                         </button>
                     </div>
                     <div class="form-group mx-1">
@@ -88,7 +91,7 @@
                     </div>
                 </div>
                 <div class="row w-100 my-2 ">
-                    <div class="mx-5 px-3"> </div>
+                    <div class="mx-5 px-3"></div>
                     <div class="form-group mx-2 ml-5">
                         <select class="custom-select d-block" name="sex" id="sex">
                             <option value="">请选择性别</option>
@@ -146,6 +149,7 @@
                         <td>${staff.site }</td>
                         <td>${staff.time }</td>
                         <td>
+                            <button type="button" class="btn btn-outline-primary"><a href="${pageContext.request.contextPath}/mail.jsp?mailbox=${staff.mailbox}">发邮件</a></button>
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                                     data-target="#Modal" id="${staff.id}" onclick="update(this)">修改
                             </button>
@@ -296,7 +300,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="education">学历</label>
-                                <input type="text" class="form-control education" name="education" id="education" required>
+                                <input type="text" class="form-control education" name="education" id="education"
+                                       required>
                                 <div class="invalid-feedback">
                                     学历不能为空
                                 </div>
@@ -397,7 +402,7 @@
             $(".education").attr("value", result.staff.education)
             $(".identity").attr("value", result.staff.identity)
             $(".site").attr("value", result.staff.site)
-            $(".sex").find("[value ='"+result.staff.sex+"']").attr("selected", "selected")
+            $(".sex").find("[value ='" + result.staff.sex + "']").attr("selected", "selected")
             $("#form").attr("action", "${pageContext.request.contextPath}/staff/update")
         });
     }

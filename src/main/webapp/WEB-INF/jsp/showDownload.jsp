@@ -18,6 +18,8 @@
             charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.js" type="text/javascript"
             charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap/js/formverify.js" type="text/javascript"
+            charset="utf-8"></script>
     <style type="text/css">
         ul {
             list-style: none;
@@ -199,7 +201,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="description">描述</label>
-                                <input type="text" class="form-control description" name="description" id="description" required>
+                                <input type="text" class="form-control description" name="description" id="description"
+                                       required>
                                 <div class="invalid-feedback">
                                     描述不能为空
                                 </div>
@@ -209,7 +212,8 @@
                             <div class="mb-3">
                                 <label for="file">文件上传</label>
                                 <input type="file" class="form-control" id="file" name="file" onchange="upload(this)">
-                                <input type="hidden" class="form-control location" name="location" id="location" required>
+                                <input type="hidden" class="form-control location" name="location" id="location"
+                                       required>
                                 <div class="invalid-feedback">
                                     文件不能为空
                                 </div>

@@ -5,6 +5,7 @@ import com.dao.JurisdictionDao;
 import com.entity.Account;
 import com.service.AccountService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -79,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
      * @return 是否成功
      */
     @Override
+    @Transactional
     public boolean insert(Account account, List<Integer> menuId) {
         Account account1=this.accountDao.insertAccount(account);
         return  this.jurisdictionDao.insertBatch(account1.getId(), menuId) > 0;
@@ -91,6 +93,7 @@ public class AccountServiceImpl implements AccountService {
      * @return 是否成功
      */
     @Override
+    @Transactional
     public boolean update(Account account, List<Integer> menuId) {
         return this.accountDao.update(account) > 0 && this.jurisdictionDao.deleteBatch(account.getId()) > 0 && this.jurisdictionDao.insertBatch(account.getId(), menuId) > 0;
     }
@@ -102,6 +105,7 @@ public class AccountServiceImpl implements AccountService {
      * @return 是否成功
      */
     @Override
+    @Transactional
     public boolean delete(Integer id) {
         Account account=this.accountDao.selectId(id);
         account.setState(0);

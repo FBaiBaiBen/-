@@ -40,8 +40,9 @@
     <mvc:interceptors>
         <!--拦截指定的/**请求并不拦截指定的/account/login请求-->
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/account/login"/>
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="/account/login"/>-->
+            <mvc:mapping path="/account/login"/>
             <bean class="com.util.InterceptUtil"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
