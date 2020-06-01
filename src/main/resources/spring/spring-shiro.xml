@@ -24,6 +24,21 @@
         <property name="realm">
             <bean class="com.util.MyReaml"></bean>
         </property>
+        <!--记住我-->
+        <property name="rememberMeManager">
+            <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+                <property name="cookie">
+                    <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                        <constructor-arg value="rememberMe"></constructor-arg>
+                        <property name="path" value="/"></property>
+                        <property name="httpOnly" value="true"></property>
+                        <property name="maxAge" value="604800"></property>
+                    </bean>
+                </property>
+                <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('MTIzNDU2Nzg5MGFiY2RlZg==')}"></property>
+            </bean>
+        </property>
     </bean>
+
 
 </beans>
