@@ -40,34 +40,33 @@ To change this template use File | Settings | File Templates.
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">发送邮件</h4>
-            <form class="needs-validation" action="${pageContext.request.contextPath}/staff/mail" method="post"
-                  novalidate>
-                <input type="hidden" name="mailbox" value="<%=request.getParameter("mailbox")%>">
+<div class="row justify-content-center">
+    <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">发送邮件</h4>
+        <form class="needs-validation" action="${pageContext.request.contextPath}/staff/mail" method="post"
+              novalidate>
+            <input type="hidden" name="mailbox" value="<%=request.getParameter("mailbox")%>">
 
-                <div class="mb-3">
-                    <label for="name">标题</label>
-                    <input type="text" class="form-control" name="name" id="name" required>
-                    <div class="invalid-feedback">
-                        标题不能为空
-                    </div>
+            <div class="mb-3">
+                <label for="name">标题</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+                <div class="invalid-feedback">
+                    标题不能为空
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label for="content">内容</label>
-                    <input type="text" class="form-control" name="content" id="content" required>
-                    <div class="invalid-feedback">
-                        内容不能为空
-                    </div>
+            <div class="mb-3">
+                <label for="content">内容</label>
+<%--                <input type="text" class="form-control" name="content" id="content" required>--%>
+                <textarea class="form-control" name="content" id="content" rows="7" required></textarea>
+                <div class="invalid-feedback">
+                    内容不能为空
                 </div>
-                <hr class="mb-4">
+            </div>
+            <hr class="mb-4">
 
-                <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">提交</button>
-            </form>
-        </div>
+            <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">提交</button>
+        </form>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/bootstrap/js/formverify.js" type="text/javascript"

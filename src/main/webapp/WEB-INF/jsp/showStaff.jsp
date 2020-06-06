@@ -28,6 +28,16 @@
         li:hover {
             cursor: pointer;
         }
+        .mui-icon {
+            font-family: Muiicons;
+            font-size: 10px;
+            font-weight: normal;
+            font-style: normal;
+            line-height: 1;
+            display: inline-block;
+            text-decoration: none;
+            -webkit-font-smoothing: antialiased;
+        }
     </style>
 </head>
 <body>
@@ -117,20 +127,20 @@
         </div>
 
         <div class="card-text">
-            <table class="table table-hover text-center my-0">
+            <table class="table table-hover text-center my-0" style="table-layout:fixed;">
                 <thead>
                 <tr>
-                    <th scope="col">序号</th>
-                    <th scope="col">姓名</th>
-                    <th scope="col">性别</th>
-                    <th scope="col">手机号码</th>
-                    <th scope="col">邮箱</th>
-                    <th scope="col">职位</th>
-                    <th scope="col">学历</th>
-                    <th scope="col">身份证号码</th>
-                    <th scope="col">部门</th>
-                    <th scope="col">联系地址</th>
-                    <th scope="col">建档日期</th>
+                    <th scope="col" style='width:5%;'>序号</th>
+                    <th scope="col" style='width:5%;'>姓名</th>
+                    <th scope="col" style='width:5%;'>性别</th>
+                    <th scope="col" style='width:10%;'>手机号码</th>
+                    <th scope="col" style='width:10%;'>邮箱</th>
+                    <th scope="col" style='width:5%;'>职位</th>
+                    <th scope="col" style='width:5%;'>学历</th>
+                    <th scope="col" style='width:10%;'>身份证号码</th>
+                    <th scope="col" style='width:5%;'>部门</th>
+                    <th scope="col" style='width:10%;'>联系地址</th>
+                    <th scope="col" style='width:10%;'>建档日期</th>
                     <th scope="col">操作</th>
                 </tr>
                 </thead>

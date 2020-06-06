@@ -80,6 +80,7 @@ public class AccountController {
     }
 
     @RequestMapping("chart")
+    @RequiresPermissions("account/show")
     @ResponseBody
     public Map<String, Integer> chart(HttpServletRequest request) {
         Map<String, Integer> map= (Map<String, Integer>) request.getServletContext().getAttribute("map");
@@ -87,6 +88,7 @@ public class AccountController {
     }
 
     @RequestMapping("show")
+    @RequiresPermissions("account/show")
     public String show(@RequestParam(defaultValue = "1") Integer page, Model model) {
         PageUtil pageUtil = new PageUtil();
         pageUtil.setNum(page);
@@ -98,6 +100,7 @@ public class AccountController {
     }
 
     @RequestMapping("showCondition")
+    @RequiresPermissions("account/show")
     public String showCondition(String name, @RequestParam(defaultValue = "1") Integer page, Model model) {
         model.addAttribute("name", name);
         Account account = new Account();
@@ -112,6 +115,7 @@ public class AccountController {
     }
 
     @RequestMapping("toAdd")
+    @RequiresPermissions("account/show")
     @ResponseBody
     public Map<String, List<Menu>> todd(HttpSession session) {
         return menuService.selectAll();
@@ -127,6 +131,7 @@ public class AccountController {
     }
 
     @RequestMapping("toUpdate")
+    @RequiresPermissions("account/show")
     @ResponseBody
     public Map<String, Object> toupdate(Integer id) {
         Account account = accountService.selectId(id);
@@ -140,6 +145,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "update", produces = "text/html;charset=utf-8")
+    @RequiresPermissions("account/show")
     public void update(Account account, @RequestParam List<Integer> menuId, HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         if (accountService.update(account, menuId)) {
@@ -149,6 +155,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "delete", produces = "text/html;charset=utf-8")
+    @RequiresPermissions("account/show")
     public void delete(Integer id, HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         if (accountService.delete(id)) {

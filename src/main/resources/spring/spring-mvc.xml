@@ -31,10 +31,10 @@
     </bean>
 
     <!--统一异常处理-->
-<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-<!--        &lt;!&ndash;指定默认的错误页面，配置了视图解析器，只需写视图名&ndash;&gt;-->
-<!--        <property name="defaultErrorView" value="error"></property>-->
-<!--    </bean>-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--指定默认的错误页面，配置了视图解析器，只需写视图名-->
+        <property name="defaultErrorView" value="error"></property>
+    </bean>
 
     <!--springMVC的拦截器-->
     <mvc:interceptors>

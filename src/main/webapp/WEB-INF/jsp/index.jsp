@@ -298,6 +298,39 @@
             $(".name").attr("value", result.account.name)
         });
     }
+    //全选
+    function a(e) {
+        console.log("a")
+        if ($(e).prop("checked")) {
+            $(e).parent().parent().next().find("input").prop("checked", true);
+        } else {
+            $(e).parent().parent().next().find("input").prop("checked", false);
+        }
+    }
+
+    //勾选子选项,父选项也被勾选
+    function b(e) {
+        var a = false;
+        $(e).parent().parent().parent().parent().find("input").each(function () {
+            if ($(e).prop("checked")) {
+                a = true;
+            }
+        })
+        $(e).parent().parent().parent().parent().prev().find("input").prop("checked", a);
+    }
+
+    function stop(event) {
+        event.stopPropagation(); //  阻止事件冒泡
+    }
+
+    //点击切换图标
+    function img(e) {
+        if ($(e).find('i').attr("class") == "fa fa-plus-square-o fa-lg mx-2") {
+            $(e).find('i').attr('class', 'fa fa-minus-square-o fa-lg mx-2');
+        } else {
+            $(e).find('i').attr('class', 'fa fa-plus-square-o fa-lg mx-2');
+        }
+    }
 </script>
 </body>
 </html>
